@@ -1,0 +1,2061 @@
+:root {
+  --bg-color: #f6f7fb; /* claro */
+  --text-color: #111827;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ❌ body NÃO centraliza */
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  transition: background-color 0.3s ease;
+}
+
+
+
+/* ✅ app é quem centraliza */
+.app {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 🎯 CONTEÚDO CENTRAL */
+.main {
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 32px;
+}
+
+
+/* ⏱️ RELÓGIO GRANDE */
+.time {
+  font-size: 7rem;
+  font-weight: 300;
+  line-height: 1;
+  margin: 0;
+}
+
+/* ⏱️ TEMPORIZADOR MENOR */
+.timer {
+  margin-top: 8px;
+  font-size: 1.6rem;
+  font-weight: 400;
+  opacity: 0.75;
+}
+
+
+/* 📝 ATIVIDADE ABAIXO */
+.activity,
+.empty {
+  width: 100%;
+  text-align: center;
+
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+/* INPUT */
+.activity-input {
+  margin-top: 20px;
+  padding: 6px 4px;
+
+  width: 320px;              /* 🔥 garante espaço */
+  max-width: 90vw;           /* responsivo */
+
+  font-size: 1.1rem;
+  text-align: center;
+
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--text-color);
+  outline: none;
+}
+
+
+/* CONTROLES */
+.controls {
+  margin-top: 28px;
+  display: flex;
+  gap: 18px;
+}
+
+button {
+  background: transparent;
+  border: 1px solid var(--text-color);
+  border-radius: 10px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+/* 🎨 COLOR PICKER */
+/* 🎨 COLOR PICKER – versão bonita */
+.color-picker {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 999;
+}
+
+.color-picker input {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+
+  border: 2px solid rgba(0, 0, 0, 0.15);
+  padding: 0;
+
+  cursor: pointer;
+
+  background-color: currentColor;
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.color-picker input:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
+}
+
+/* Chrome / Edge */
+.color-picker input::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.color-picker input::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
+
+.color-picker input[type="color"] {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid var(--picker-border);
+  cursor: pointer;
+
+  box-shadow:
+    var(--picker-ring),
+    var(--picker-shadow);
+
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.2s ease,
+    border 0.3s ease;
+}
+
+/* ✨ animação ao abrir */
+.color-picker input[type="color"].ring-animate {
+  animation: ringPulse 0.45s ease-out;
+}
+
+@keyframes ringPulse {
+  0% {
+    box-shadow:
+      0 0 0 0 rgba(255,255,255,0.0),
+      var(--picker-shadow);
+  }
+  50% {
+    box-shadow:
+      0 0 0 6px rgba(255,255,255,0.35),
+      var(--picker-shadow);
+  }
+  100% {
+    box-shadow:
+      var(--picker-ring),
+      var(--picker-shadow);
+  }
+}
+
+
+
+
+/* ⏱️ RELÓGIO */
+.clock {
+  margin: 0;
+  font-size: 10rem;
+  font-weight: 300;
+  margin-bottom: 32px;
+  color: var(--clock-color);
+  transition: color 0.3s ease;
+}
+
+
+/* 🧾 CARD DA ATIVIDADE */
+.activity-card {
+  position: relative;
+  min-width: 280px;
+  max-width: 360px;
+
+  padding: 16px 20px;
+
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(8px);
+
+  border-radius: 16px;
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+/* TEXTO DA ATIVIDADE */
+.activity {
+  font-size: 1rem;
+  opacity: 0.85;
+  cursor: pointer;
+  word-break: break-word;
+  text-align: center;
+}
+
+/* TEXTO QUANDO NÃO TEM ATIVIDADE */
+.empty {
+  font-size: 0.95rem;
+  opacity: 0.6;
+  text-align: center;
+}
+
+/* INPUT DE EDIÇÃO */
+.activity-input {
+  width: 290px;
+
+  font-size: 1rem;
+  text-align: center;
+
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+
+  padding: 6px 4px;
+  outline: none;
+}
+
+/* ⏱️ TIMER PEQUENO */
+.small-timer {
+  font-size: 1.1rem;
+  opacity: 0.7;
+}
+
+/* 🎛️ BOTÕES */
+.controls {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.controls button {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+
+  background: transparent;
+  border: none;
+
+  font-size: 1.2rem;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  opacity: 1;
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+}
+
+/* BASE */
+.controls button {
+  min-width: 90px;
+  padding: 8px 16px;
+
+  font-size: 0.85rem;
+  font-weight: 500;
+
+  border-radius: 999px;
+  border: none;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+/* BOTÃO PRINCIPAL */
+.controls .primary {
+  background: #111;
+  color: #fff;
+}
+
+.controls .primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+/* BOTÃO SECUNDÁRIO */
+.controls .secondary {
+  background: rgba(0, 0, 0, 0.1);
+  color: #111;
+}
+
+.controls .secondary:hover {
+  background: rgba(0, 0, 0, 0.18);
+}
+
+/* CLICK FEEDBACK */
+.controls button:active {
+  transform: scale(0.96);
+}
+
+
+/* BOTÃO HAMBÚRGUER */
+.hamburger {
+  position: fixed;
+  top: 20px;
+  left: 24px;
+
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  z-index: 1000;
+
+  transition: transform 0.3s ease;
+}
+
+/* as 3 barrinhas */
+.hamburger span {
+  width: 22px;
+  height: 2.5px;
+
+  background: var(--clock-color);
+  border-radius: 999px;
+
+  transition:
+    transform 0.3s ease,
+    opacity 0.2s ease,
+    background 0.3s ease;
+}
+
+/* ✨ HOVER */
+.hamburger:hover {
+  transform: scale(1.08);
+}
+
+/* 🔥 MENU ABERTO → vira X */
+.hamburger.open span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+.hamburger.open span {
+  background: var(--clock-color);
+  box-shadow: 0 0 8px rgba(0,0,0,0.25);
+}
+
+
+
+/* MENU */
+.menu {
+  position: fixed;
+  top: 70px;
+  left: 20px;
+
+  display: flex;
+  gap: 20px;
+
+  padding: 14px;
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+
+  z-index: 99;
+}
+
+/* ITEM DO MENU */
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  font-size: 1.4rem;
+}
+
+.menu-item span {
+  font-size: 0.7rem;
+  margin-top: 4px;
+  opacity: 0.7;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  color: rgba(0, 0, 0, 0.55);
+  transition: color 0.25s ease, transform 0.2s ease;
+}
+
+/* widget aberto */
+.menu-item.active {
+  color: #2563eb; /* azul */
+}
+
+.menu-item.running {
+  color: #2563eb;
+}
+
+.menu-item.running svg {
+  filter: drop-shadow(0 0 6px rgba(37, 99, 235, 0.8));
+}
+
+
+
+/*PLAYER*/
+.music-player {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px 14px;
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* BOTÕES */
+.music-player button {
+  background: transparent;
+  border: none;
+
+  font-size: 1.1rem;
+  cursor: pointer;
+  opacity: 0.75;
+
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.music-player button:hover {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+/* PLAY CENTRAL */
+.music-player .play {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+/* VOLUME */
+.music-player input[type="range"] {
+  width: 70px;
+}
+
+/* MENU LATERAL */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  height: 100vh;
+  width: 90px;
+
+  padding-top: 80px;
+
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  transform: translateX(-100%);
+  animation: slideIn 0.35s ease forwards;
+
+  z-index: 90;
+}
+
+@keyframes slideIn {
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* ITENS */
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  color: #444;
+  opacity: 0.7;
+
+  transition: all 0.25s ease;
+}
+
+.menu-item:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.menu-item span {
+  font-size: 0.65rem;
+}
+
+/* ATIVO */
+.music-player {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+
+  width: 340px;          /* 🔥 maior e confortável */
+  padding: 16px;
+
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(14px);
+
+  border-radius: 18px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+}
+
+
+/* 🎵 Nome da música */
+.music-title {
+  font-size: 1.05rem;
+  letter-spacing: 0.2px;
+}
+
+
+
+/* ⏱️ Barra + tempo */
+.progress-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.time {
+  font-size: 0.65rem;
+  opacity: 0.6;
+  min-width: 34px;
+  text-align: center;
+}
+
+.time-row {
+  font-size: 0.75rem;
+  opacity: 0.75;
+  margin-top: 4px;
+  text-align: center;
+}
+
+
+/* 🎚️ Controles */
+.player-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.player-controls button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.75;
+  transition: 0.2s;
+}
+
+.player-controls button:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* 🔊 Volume */
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  background: rgba(0, 0, 0, 0.06);
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+.volume-control svg {
+  opacity: 0.7;
+}
+
+.volume-control input[type="range"] {
+  width: 80px;
+  height: 4px;
+
+  appearance: none;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+/* Thumb */
+.volume-control input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+
+  border-radius: 50%;
+  background: #2563eb;
+  cursor: pointer;
+}
+
+.volume-control input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #2563eb;
+}
+
+.mute-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+
+  opacity: 0.7;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.mute-btn:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.progress-section {
+  width: 100%;
+}
+
+.progress-container {
+  width: 100%;
+  height: 6px;                 /* 🔥 sem isso ela some */
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 999px;
+  cursor: pointer;
+  position: relative;
+}
+
+.progress {
+  width: 100%;
+  height: 100%;
+  background: #2563eb;
+  border-radius: 999px;
+  transition: width 0.15s linear;
+}
+
+.playlist-card {
+  position: fixed;
+  bottom: 20px;
+  left: 380px;
+
+  width: 280px;
+  max-height: 320px;
+
+  background: color-mix(
+    in srgb,
+    var(--bg-color) 75%,
+    white
+    
+  );
+
+  backdrop-filter: blur(14px);
+  border-radius: 18px;
+  padding: 12px 14px 12px 12px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-sizing: border-box;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+
+  overflow-x: hidden;   /* ❌ nunca horizontal */
+  overflow-y: auto;  
+  scrollbar-gutter: stable;
+}
+
+.playlist-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  padding: 6px;
+
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: background 0.2s ease;
+}
+
+.playlist-item:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.playlist-cover {
+  width: 36px;
+  height: 36px;
+
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.playlist-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.playlist-name {
+  font-size: 0.75rem;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.playlist-time {
+  font-size: 0.7rem;
+  opacity: 0.6;
+}
+
+.playlist-item.active {
+  background: color-mix(
+    in srgb,
+    var(--bg-color) 65%,
+    #2563eb
+  );
+  color: #25eb3f;
+}
+
+.playlist-card {
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.playlist-card {
+  scrollbar-width: thin;
+  scrollbar-color: 
+    color-mix(in srgb, var(--bg-color) 60%, #2563eb)
+    transparent;
+}
+
+
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
+.playlist-card button {
+  background: none;
+  border: none;
+
+  padding: 8px 10px;
+  border-radius: 10px;
+
+  font-size: 0.8rem;
+  text-align: left;
+
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.playlist-card button:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.playlist-card button.active {
+  background: rgba(37, 99, 235, 0.12);
+  color: #000000;
+  font-weight: 600;
+}
+
+.playlist-card::-webkit-scrollbar {
+  width: 6px;
+}
+
+.playlist-card::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.playlist-card::-webkit-scrollbar-thumb {
+  background: color-mix(
+    in srgb,
+    var(--bg-color) 60%,
+    #2563eb
+  );
+  border-radius: 999px;
+}
+
+.playlist-card::-webkit-scrollbar-thumb:hover {
+  background: color-mix(
+    in srgb,
+    var(--bg-color) 50%,
+    #2563eb
+  );
+}
+
+.playlist-card::-webkit-scrollbar-thumb {
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.playlist-card:hover::-webkit-scrollbar-thumb {
+  opacity: 1;
+}
+
+.playlist-card::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.playlist-card::-webkit-scrollbar-button:single-button {
+  display: none;
+}
+  
+
+.music-cover {
+  width: 120px;
+  height: 120px;
+
+  object-fit: cover;        /* 🔥 mantém qualidade */
+  object-position: center;
+
+  border-radius: 16px;
+  margin: 0 auto 6px;
+
+  image-rendering: auto;
+}
+
+.music-player {
+  background: color-mix(
+    in srgb,
+    var(--bg-color) 70%,
+    white
+  );
+
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.progress {
+  background: color-mix(
+    in srgb,
+    var(--bg-color) 60%,
+    #2563eb
+  );
+}
+
+.play-btn {
+  background: color-mix(
+    in srgb,
+    var(--bg-color) 60%,
+    #2563eb
+  );
+  color: rgb(0, 0, 0);
+}
+
+
+.activity-widget {
+  position: fixed;
+  right: 24px;
+  top: 120px;
+  width: 320px;
+  background: var(--card-bg);
+  border-radius: 16px;
+  z-index: 20;
+}
+
+
+.activity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  opacity: .7;
+}
+
+.activity-title {
+  margin-top: 10px;
+  font-size: 1rem;
+  display: flex;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.activity-timer {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 8px 0;
+}
+
+.activity-controls {
+  display: flex;
+  gap: 12px;
+}
+
+.activity-controls button {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+}
+
+
+.pomodoro-card {
+  margin-top: 32px;
+
+  width: 320px;
+  padding: 20px;
+
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(14px);
+
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.pomodoro-card {
+  transition: background-color 0.6s ease,
+              transform 0.4s ease,
+              opacity 0.4s ease;
+}
+
+.pomodoro-card.animating {
+  transform: scale(0.97);
+  opacity: 0.85;
+}
+
+/* MODOS */
+.pomodoro-modes {
+  display: flex;
+  gap: 8px;
+}
+
+.pomodoro-modes button {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.75rem;
+  opacity: 0.6;
+  transition: all 0.2s ease;
+}
+
+.pomodoro-modes button.active {
+  background: rgba(0, 0, 0, 0.1);
+  opacity: 1;
+}
+
+/* TIMER */
+.pomodoro-time {
+  font-size: 3.2rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+}
+
+/* BOTÃO */
+.pomodoro-action {
+  width: 100%;
+  padding: 10px 0;
+
+  border-radius: 12px;
+  border: none;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  background: #ffffff;
+  color: #111;
+
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.pomodoro-action:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+/* ATIVIDADE */
+.pomodoro-task {
+  width: 100%;
+  text-align: center;
+
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+
+  padding: 6px;
+  font-size: 0.8rem;
+
+  background: transparent;
+  outline: none;
+}
+
+/* wrapper do pomodoro */
+.pomodoro-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* card do pomodoro */
+.pomodoro-card {
+  background: color-mix(in srgb, var(--bg-color), #000 8%);
+  border-radius: 22px;
+  padding: 22px;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0,0,0,.15);
+  animation: fadeUp .4s ease;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* MODOS */
+/* MODES — segmented control */
+.radio-inputs {
+  display: flex;
+  width: 100%;
+  max-width: 280px;
+  padding: 4px;
+  gap: 4px;
+
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--bg-color), #000 12%);
+}
+
+.radio {
+  flex: 1;
+  text-align: center;
+}
+
+.radio input {
+  display: none;
+}
+
+.radio .name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 6px 0;
+  border-radius: 10px;
+  cursor: pointer;
+
+  font-family: "Nunito", "Poppins", system-ui;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+
+  /* 👇 TEXTO LEGÍVEL EM QUALQUER COR */
+  color: rgba(255, 255, 255, 0.75);
+
+  opacity: 0.85;
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
+/* hover */
+.radio:hover .name {
+  opacity: 1;
+}
+
+/* ATIVO */
+.radio input:checked + .name {
+  /* fundo reage ao bg, mas mantém contraste */
+  background: color-mix(
+    in srgb,
+    var(--bg-color),
+    rgba(255,255,255,0.35)
+  );
+
+  /* 👇 TEXTO FORTE E SEMPRE LEGÍVEL */
+  color: var(--clock-color);
+
+  opacity: 1;
+  font-weight: 700;
+
+  box-shadow: 0 6px 16px rgba(0,0,0,0.22);
+  animation: selectMode 0.3s ease;
+}
+
+
+/* animação elegante */
+@keyframes selectMode {
+  0% {
+    transform: scale(0.96);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* TIMER */
+.pomodoro-time {
+  font-size: 3.2rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  font-family: "Nunito", "Poppins", system-ui;
+  margin: 12px 0 20px;
+  transition: color .3s;
+  color: var(--clock-color);
+}
+
+/* CONTROLES */
+.pomodoro-controls {
+  display: flex;
+  align-items: center; /* 🔑 isso resolve o desalinhamento */
+  justify-content: center;
+  gap: 14px;
+}
+
+
+.main-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: var(--clock-color);
+  color: var(--bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform .2s ease;
+}
+
+.main-btn:hover {
+  transform: scale(1.08);
+}
+
+.main-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.main-btn svg {
+  width: 22px;
+  height: 22px;
+}
+
+.main-btn svg {
+  stroke-width: 2.4;
+}
+
+
+.main-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.35) 10%, transparent 11%);
+  transform: scale(10);
+  opacity: 0;
+  transition: transform 0.6s, opacity 0.8s;
+}
+
+.main-btn:active::after {
+  transform: scale(0);
+  opacity: 1;
+  transition: 0s;
+}
+
+
+.skip-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+
+  background: color-mix(in srgb, var(--clock-color), transparent 85%);
+  color: var(--clock-color);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  opacity: 0.75;
+
+  transition: 
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    background 0.3s ease;
+}
+
+.skip-btn:hover {
+  opacity: 1;
+  transform: scale(1.08);
+}
+
+.skip-btn:active {
+  transform: scale(0.92);
+}
+
+
+.activity-text {
+  margin-top: 12px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--clock-color), transparent 60%);
+
+  width: 100%;
+  max-width: 240px;
+
+  text-align: center;
+  outline: none;
+
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+
+  color: var(--clock-color);
+  opacity: 0.85;
+
+  transition:
+    color 0.4s ease,
+    border-color 0.3s ease,
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+
+/* cores por modo */
+
+.activity-text::placeholder {
+  color: color-mix(in srgb, var(--clock-color), transparent 55%);
+  font-weight: 400;
+}
+
+.activity-text:focus {
+  opacity: 1;
+  transform: scale(1.04);
+  border-bottom-color: var(--clock-color);
+}
+
+.activity-text:not(:focus) {
+  border-bottom-color: transparent;
+}
+
+/* feedback suave ao digitar */
+.activity-text:not(:placeholder-shown):focus {
+  animation: subtlePulse 0.25s ease;
+}
+
+@keyframes subtlePulse {
+  0%   { transform: scale(1.04); }
+  50%  { transform: scale(1.07); }
+  100% { transform: scale(1.04); }
+}
+
+.pomodoro-time {
+  font-family: "Nunito", "Poppins", "Inter", system-ui;
+  font-size: 3rem;        /* tamanho médio elegante */
+  font-weight: 600;        /* mais presente sem pesar */
+  letter-spacing: 1.5px;
+
+  color: var(--clock-color);
+
+  margin: 14px 0 10px;
+  transition: color 0.3s ease;
+}
+
+.pomodoro-time {
+  text-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+
+.task-list {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+
+  width: 260px;
+  padding: 16px;
+
+  border-radius: 18px;
+
+  background: color-mix(in srgb, var(--bg-color), #000 8%);
+  backdrop-filter: blur(14px);
+
+  box-shadow: 0 12px 32px rgba(0,0,0,0.18);
+
+  color: var(--clock-color);
+
+  font-family: "Nunito", system-ui;
+  animation: fadeUp .4s ease;
+}
+
+.task-list h3 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  opacity: 0.85;
+}
+
+.task-list input {
+  width: 100%;
+  padding: 8px 10px;
+
+  border-radius: 10px;
+  border: none;
+  outline: none;
+
+  font-size: 0.8rem;
+  background: rgba(255,255,255,0.15);
+  color: var(--clock-color);
+}
+
+.task-list input::placeholder {
+  color: color-mix(in srgb, var(--clock-color), transparent 40%);
+}
+
+
+.task-list ul {
+  list-style: none;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.task-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 6px 8px;
+  border-radius: 10px;
+
+  font-size: 0.78rem;
+  cursor: pointer;
+
+  background: rgba(0,0,0,0.04);
+  transition: background .2s ease, opacity .2s ease;
+}
+
+.task-list li:hover {
+  background: rgba(0,0,0,0.08);
+}
+
+.task-list li.done span {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+.task-list .actions {
+  display: flex;
+  gap: 6px;
+}
+
+.task-list button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.task-list button:hover {
+  opacity: 1;
+}
+
+.task-done-btn {
+  all: unset;
+  position: relative;
+
+  width: 26px;
+  height: 26px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  cursor: pointer;
+
+  color: var(--clock-color);
+  opacity: 0.75;
+
+  overflow: hidden;
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+.task-done-btn:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* efeito vindo da esquerda */
+.task-done-btn::before {
+  content: "";
+  position: absolute;
+
+  width: 120%;
+  height: 120%;
+  border-radius: 50%;
+
+  background: color-mix(in srgb, var(--clock-color), transparent 40%);
+  transform: translateX(-130%);
+  opacity: 0.6;
+
+  transition: transform 0.45s ease;
+}
+
+.task-done-btn:hover::before {
+  transform: translateX(-30%);
+}
+
+.task-done-btn:active::before {
+  transform: translateX(0);
+  opacity: 0.8;
+}
+
+.task-list li.done {
+  opacity: 0.5;
+  transform: scale(0.98);
+  transition: all .2s ease;
+}
+
+.task-item {
+  position: relative;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  padding: 8px 10px;
+  border-radius: 12px;
+
+  font-size: 0.78rem;
+  cursor: pointer;
+
+  background: rgba(255,255,255,0.08);
+  transition: transform .5s ease, opacity .25 ease;
+}
+
+.task-item span {
+  flex: 1;
+  min-width: 0;
+  word-break: break-word;
+  white-space: normal;
+}
+
+/* ações (check + lixeira) */
+.task-item .actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.task-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    120deg,
+    transparent,
+    color-mix(in srgb, var(--clock-color), transparent 55%),
+    transparent
+  );
+
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+  pointer-events: none;
+}
+
+.task-item.done::before {
+  transform: translateX(100%);
+}
+
+.task-item.done {
+  opacity: 0.55;
+}
+
+.task-item.done span {
+  text-decoration: line-through;
+}
+
+.task-item:active {
+  transform: scale(0.97);
+}
+
+.history-toggle {
+  margin-bottom: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--clock-color);
+  opacity: 0.7;
+}
+
+.history-toggle:hover {
+  opacity: 1;
+}
+
+/* CARD DO HISTÓRICO */
+.task-history {
+  position: fixed;
+  bottom: 24px;
+  right: 300px;
+
+  width: 240px;
+  padding: 16px;
+
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--bg-color), #000 10%);
+  backdrop-filter: blur(14px);
+
+  box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+
+  color: var(--clock-color);
+  animation: fadeUp .35s ease;
+
+  
+}
+
+.task-history h3 {
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+}
+
+.task-history ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.task-history li {
+  font-size: 0.75rem;
+  opacity: 0.85;
+
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.task-history li span {
+  flex: 1;
+  min-width: 0;
+  word-break: break-word;
+}
+
+.task-history li small {
+  flex-shrink: 0;
+  opacity: 0.6;
+  font-size: 0.75rem;
+}
+
+.task-history small {
+  display: block;
+  font-size: 0.65rem;
+  opacity: 0.5;
+}
+
+.task-history .empty {
+  font-size: 0.7rem;
+  opacity: 0.5;
+}
+
+/* botão ícone do histórico no card de tarefas */
+.history-toggle.icon {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #555;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+.history-toggle.icon:hover {
+  color: #000;
+}
+
+/* card do histórico */
+.task-history {
+  position: relative;
+}
+
+/* botão limpar histórico */
+.clear-history {
+  all: unset;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+
+  color: var(--text-color);
+  opacity: 0.75;
+
+  transition: 
+    opacity 0.2s ease,
+    background 0.2s ease,
+    transform 0.15s ease;
+}
+
+.clear-history:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(1.05);
+}
+
+.clear-history:active {
+  transform: scale(0.95);
+}
+
+.clear-history {
+  position: relative;
+}
+
+.clear-history::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  background: var(--clock-color);
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1s linear, opacity 0.2s;
+}
+
+.clear-history.holding::after {
+  opacity: 0.25;
+  transform: scaleX(1);
+}
+
+.task-history.clearing {
+  animation: shred 0.5s ease forwards;
+}
+
+@keyframes shred {
+  to {
+    opacity: 0;
+    transform: translateY(12px) scale(0.94);
+  }
+}
+
+
+
+.tooltip {
+  position: relative;
+}
+
+.tooltip-text {
+  position: absolute;
+  bottom: 120%;
+  right: 50%;
+  transform: translateX(50%);
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
+.tooltip:hover .tooltip-text {
+  opacity: 1;
+  transform: translateX(50%) translateY(-4px);
+}
+
+.history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.history-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px; /* 👈 bem juntinho */
+}
+
+
+/* variável base do card (você já tem algo assim) */
+.task-list,
+.task-history {
+  --icon-color: color-mix(in srgb, var(--text-color), #000 10%);
+}
+
+/* variável base do card (você já tem algo assim) */
+.task-list,
+.task-history {
+  --icon-color: color-mix(in srgb, var(--text-color), #000 10%);
+}
+
+.icon svg {
+  stroke: var(--icon-color);
+}
+
+.history-badge {
+  min-width: 20px;
+  height: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 0.65rem;
+  font-weight: 700;
+
+  padding: 0 6px;
+  border-radius: 999px;
+}
+
+/*TIMER*/
+
+.focus-timer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  padding: 8px 12px;
+  border-radius: 999px;
+
+  background: rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(6px);
+
+  font-size: 13px;
+  width: fit-content;
+  margin-top: 10px;
+
+  transition: all 0.3s ease;
+}
+
+.focus-timer.active {
+  background: rgba(0, 123, 255, 0.15);
+}
+
+.focus-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.focus-time {
+  font-variant-numeric: tabular-nums;
+}
+
+.focus-controls button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.focus-controls button:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.focus-timer {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.focus-timer-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px; /* bem juntinho */
+}
+
+
+.focus-timer-controls button {
+  padding: 4px;
+}
+
+.top-widgets {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.focus-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.side-widgets {
+  position: fixed;
+  top: 67px;
+  right: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  z-index: 50;
+}
+
+.focus-timer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.focus-timer-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.focus-timer {
+  font-family: "Nunito", system-ui, sans-serif;
+}
+
+.focus-timer {
+  letter-spacing: 0.5px;
+}
+.focus-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.focus-controls button {
+  padding: 4px;
+  min-width: unset;
+  min-height: unset;
+  line-height: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+}
+
+.focus-controls button:hover {
+  transform: scale(1.05);
+}
+
+.focus-controls button {
+  transition: transform 0.15s ease;
+}
+
+.focus-timer {
+  color: var(--ui-contrast);
+}
+
+.focus-time {
+  font-family: "Inter", system-ui, sans-serif;
+  font-weight: 500;
+  color: var(--ui-contrast);
+}
+
+.focus-controls button {
+  color: var(--ui-contrast);
+  background: transparent;
+  border: 1px solid var(--ui-border);
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.focus-controls button:hover {
+  background: var(--ui-border);
+}
+
+.focus-controls button:active {
+  transform: scale(0.92);
+}
+
+
+.menu-item {
+  position: relative;
+}
+
+.task-badge {
+  position: absolute;
+  top: 2px;
+  right: 15px;
+
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+
+  background: #3f89f7;
+  color: white;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  border-radius: 999px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 0 0 2px var(--bg-color);
+}
+
+.on-dark .task-list,
+.on-dark .task-item,
+.on-dark .task-item span,
+.on-dark .task-item button,
+.on-dark .task-header h3 {
+  color: #ffffff;
+}
+
+
+
+
+.menu-item {
+  color: #555;
+}
+
+.menu-item.active {
+  color: #3b82f6; /* azul */
+}
+
+.menu-item.active svg {
+  stroke: #3b82f6;
+}
+  
+
+.task-list svg {
+  stroke: currentColor !important;
+}
+
+.on-dark .task-list {
+  color: #ffffff;
+}
+
+.on-dark .task-item button {
+  color: #ffffff;
+}
