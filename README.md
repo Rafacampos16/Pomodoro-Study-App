@@ -3,6 +3,20 @@
 Aplicação web focada em **produtividade, foco e organização**, ideal para estudos e trabalho.  
 O app reúne **Pomodoro**, **timer de foco**, **lista de tarefas**, **música ambiente** e **customização de cores**, tudo em uma interface simples e elegante.
 
+##  O que é o Método Pomodoro?
+
+O **Método Pomodoro** é uma técnica de estudo e produtividade criada para ajudar a manter o foco e evitar a procrastinação.
+
+Ele funciona dividindo o tempo de trabalho em ciclos, geralmente assim:
+
+- ⏱️ **25 minutos de foco total**
+- ☕ **5 minutos de pausa**
+- 🔁 A cada 4 ciclos, uma **pausa longa**
+
+A ideia é simples: trabalhar com foco absoluto por um curto período e depois descansar, ajudando o cérebro a manter a concentração por mais tempo sem esgotamento.
+
+Este aplicativo foi desenvolvido justamente para **facilitar o uso do método Pomodoro**, unindo timer, organização de tarefas e ambiente de estudo em um só lugar.
+
 ---
 
 ## ✨ Funcionalidades
